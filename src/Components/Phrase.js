@@ -4,11 +4,13 @@ export default function Phrase({ phrases }) {
 
     return (
         <div id="phrase" className="section">
-            {phrases.map(phrase => (
-                <ul key={phrase.index}>
-                    <li />
-                </ul>
-            ))}
+            <ul >
+                {phrases.map(phrase => (
+                    <li key={phrase.index}> 
+                        
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }

@@ -50,6 +50,11 @@ export default function Game({ setLives }) {
     const keyrow3 = [
         "z","x","c","v","b","n","m",
     ]
+
+    const getKeyRowValue = e => {
+        // can add data keys later for key press
+        console.log(e.target.textContent);
+    }
     
     return (
         <>
@@ -62,17 +67,17 @@ export default function Game({ setLives }) {
             <div id="qwerty" className="section">
                 <div className="keyrow">
                     {keyrow1.map(key => (
-                        <button key={key} className="key">{key}</button>
+                        <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
                     ))}
                 </div>
                 <div className="keyrow">
                     {keyrow2.map(key => (
-                        <button key={key} className="key">{key}</button>
+                        <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
                     ))}
                 </div>
                 <div className="keyrow">
                     {keyrow3.map(key => (
-                        <button key={key} className="key">{key}</button>
+                        <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
                     ))}
                 </div>
             </div>
