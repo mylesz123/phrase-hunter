@@ -1,3 +1,9 @@
+This is a react game app called phrase hunter that created a few componets to interact with eachother to play a guessing game. you type or slick some letters that you think could be in the phrase. the phrase is randomly selected form an array and shown to the screen as hidden elements giving a hint as to the length of what the word can be.
+may add hints as an option
+will show a special screen when the player loses (absorbs their 5 lives)
+when you get something right, a letter will dislay on the screen
+the rules are simple, guess away.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
