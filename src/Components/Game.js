@@ -30,6 +30,26 @@ export default function Game({ setLives }) {
             hint: ""
         },
     ];
+
+    const scoreboardListItems = [
+        { src: "images/firstLife.png"},
+        { src: "images/secondLife.png"},
+        { src: "images/thirdLife.png"},
+        { src: "images/fourthLife.png"},
+        { src: "images/lastLife.png"},
+    ]
+
+    const keyrow1 = [
+        "q","w","e","r","t","y","u","i","o","p",
+    ]
+
+    const keyrow2 = [
+        "a","s","d","f","g","h","j","k","l",
+    ]
+
+    const keyrow3 = [
+        "z","x","c","v","b","n","m",
+    ]
     
     return (
         <>
@@ -41,48 +61,27 @@ export default function Game({ setLives }) {
 
             <div id="qwerty" className="section">
                 <div className="keyrow">
-                    <button className="key">q</button>
-                    <button className="key">w</button>
-                    <button className="key">e</button>
-                    <button className="key">r</button>
-                    <button className="key">t</button>
-                    <button className="key">y</button>
-                    <button className="key">u</button>
-                    <button className="key">i</button>
-                    <button className="key">o</button>
-                    <button className="key">p</button>
+                    {keyrow1.map(key => (
+                        <button key={key} className="key">{key}</button>
+                    ))}
                 </div>
-
                 <div className="keyrow">
-                    <button className="key">a</button>
-                    <button className="key">s</button>
-                    <button className="key">d</button>
-                    <button className="key">f</button>
-                    <button className="key">g</button>
-                    <button className="key">h</button>
-                    <button className="key">j</button>
-                    <button className="key">k</button>
-                    <button className="key">l</button>
+                    {keyrow2.map(key => (
+                        <button key={key} className="key">{key}</button>
+                    ))}
                 </div>
-
                 <div className="keyrow">
-                    <button className="key">z</button>
-                    <button className="key">x</button>
-                    <button className="key">c</button>
-                    <button className="key">v</button>
-                    <button className="key">b</button>
-                    <button className="key">n</button>
-                    <button className="key">m</button>
+                    {keyrow3.map(key => (
+                        <button key={key} className="key">{key}</button>
+                    ))}
                 </div>
             </div>
 
             <div id="scoreboard" className="section">
                 <ol>
-                    <li className="tries"><img src="images/firstLife.png" height="35px" widght="30px" /></li>
-                    <li className="tries"><img src="images/secondLife.png" height="35px" widght="30px" /></li>
-                    <li className="tries"><img src="images/thirdLife.png" height="35px" widght="30px" /></li>
-                    <li className="tries"><img src="images/fourthLife.png" height="35px" widght="30px" /></li>
-                    <li className="tries"><img src="images/lastLife.png" height="35px" widght="30px" /></li>
+                    {scoreboardListItems.map(item => (
+                        <li key={item.src} className="tries"><img src={item.src} alt="game life"/> </li>
+                    ))}    
                 </ol>
             </div>
         </>
