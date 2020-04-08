@@ -1,16 +1,22 @@
 import React from 'react'
 
-export default function Phrase({ phrase }) {
-
+export default function Phrase({ phrase, includesMatch }) {
+    // todo : show letter if selected
     return (
         <div id="phrase" className="section">
-            {phrase.map(letter => (
-                <ul key={letter}>
-                    {letter !== " "
-                        ? (<li className={"hide letter"}> {letter} </li>)
-                        : (<li className="space"></li>)}
-                </ul>
-            ))}
+            <ul>
+                {phrase.map((letter, index) => (
+                    letter !== " "
+                        ? (
+                            <li key={letter + index} 
+                                className={`letter ${includesMatch(letter) ? "show" : "hide"}`} 
+                                > 
+                                {letter} 
+                            </li>
+                        )
+                        : (<li key={letter + index} className="space" />)
+                ))}
+            </ul>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import Game from './Game';
 import './../styles/index.css';
@@ -57,7 +57,7 @@ export default function App() {
       {!gameIsRunning &&
         <div id="overlay" className="start">
           <Header lives={lives}/>
-        <button id="btn__reset" onClick={startGame}>{ lives === 0 ? "Restart" : "Start Game" }</button>
+        <button id="btn__reset" onClick={startGame}>{ lives === -1 ? "Restart" : "Start Game" }</button>
         </div>
       }
       <Game 

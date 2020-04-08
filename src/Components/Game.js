@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Phrase from './Phrase';
 
 export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
-    const [selectedLetter, setSelectedLetter] = useState(' ');
+    // needs to be an array to hold the values of the selected letters
+    const [selectedLetters, setSelectedLetters] = useState([]);
 
     const scoreboardListItems = [
-        { src: "images/firstLife.png"},
-        { src: "images/secondLife.png"},
-        { src: "images/thirdLife.png"},
-        { src: "images/fourthLife.png"},
         { src: "images/lastLife.png"},
+        { src: "images/fourthLife.png"},
+        { src: "images/thirdLife.png"},
+        { src: "images/secondLife.png"},
+        { src: "images/firstLife.png"},
     ]
 
     const keyrow1 = [
@@ -24,20 +25,22 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
         "z","x","c","v","b","n","m",
     ]
 
+    const includesMatch = (value) => value.includes(selectedLetters)
+
     useEffect(() => {
-        !phrase.includes(selectedLetter) && removeLife();
-    }, [selectedLetter])
+        !includesMatch(phrase) && removeLife();
+    }, [selectedLetters])
 
     const getKeyRowValue = e => {
         // can add data keys later for key press
-        setSelectedLetter(e.target.textContent);
+        setSelectedLetters(e.target.textContent);
     }
 
     //todo, when life is lost, remove a heart from the board,
     const removeLife = () => {
         setLives(prev => prev - 1)
         
-        if (lives === 1) {
+        if (lives === 0) {
             gameOver();
         }
     }
@@ -48,14 +51,17 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
     
     return (
         <>
-            <button onClick={removeLife} />
             <div id="banner" className="section">
                 <h2 className="header">Phrase Hunter</h2>
             </div>
 
+            <div className="section">
+                <span className={lives === 0 ? "last-life" : "life"}> Lives: {lives} </span>
+            </div>
+
             <Phrase 
                 phrase={phrase}
-                selectedLetter={selectedLetter}
+                includesMatch={includesMatch}
             />
 
             <div id="qwerty" className="section">
@@ -78,9 +84,9 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
 
             <div id="scoreboard" className="section">
                 <ol>
-                    {/* todo, when life is lost remove img */}
-                    {scoreboardListItems.map(item => (
-                        <li key={item.src} className="tries"><img src={item.src} alt="game life"/> </li>
+                    {scoreboardListItems.map((item, index) => (
+                        lives === index &&
+                        <li key={item.src} className="tries" ><img src={item.src} alt="game life"/> </li>
                     ))}    
                 </ol>
             </div>

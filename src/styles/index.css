@@ -8,6 +8,8 @@
   --color-lose: #D94545;
   --color-start: #5b85b7;
   --color-neutral: #445069;
+  --color-life: blueviolet;
+  --color-last-life: red;
   --color-neutral-light: #D2D2D2;
   --color-keys: #37474F;
   --color-keys-light: #E5E5E5;
@@ -108,7 +110,13 @@ button {
   width: 15px;
 }
 
+.life {
+  color: var(--color-life);
+}
 
+.last-life {
+  color: var(--color-last-life);
+}
 
 .show {
   color: #fff;
