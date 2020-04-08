@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Header from './Header';
 import Game from './Game';
 import './../styles/index.css';
 
 export default function App() {
-  const [lives, setLives] = useState();
-  // when lives = 5 then gameIsRunning = false and header should show game over message
-  const [gameIsRunning, setGameIsRunning] = useState(false);
 
   const phrases = [
     {
@@ -40,11 +37,18 @@ export default function App() {
       hint: "main song from a disney movie about a .... king"
     },
   ];
-  const randomIndex = (phrases) => phrases[Math.floor(Math.random() * phrases.length)];
-  const randomPhrase = randomIndex(phrases).phrase.split("");
+  const [lives, setLives] = useState();
+  // when lives = 5 then gameIsRunning = false and header should show game over message
+  const [gameIsRunning, setGameIsRunning] = useState(false);
+
+  const i = Math.floor(Math.random() * phrases.length);
+  const [randomIndex, setRandomIndex] = useState(i);
+  const randomPhrase = phrases[randomIndex].phrase.split("");
 
   const startGame = () => {
+    const i = Math.floor(Math.random() * phrases.length);
     setLives(5)
+    setRandomIndex(i)
     setGameIsRunning(true)
   }
 

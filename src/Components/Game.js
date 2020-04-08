@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Phrase from './Phrase';
 
 export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
-    console.log("game rendered")
-
-    const [selectedLetter, setSelectedLetter] = useState('');
+    const [selectedLetter, setSelectedLetter] = useState(' ');
 
     const scoreboardListItems = [
         { src: "images/firstLife.png"},
@@ -27,9 +25,7 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
     ]
 
     useEffect(() => {
-        // this works, just need to stop it from re-rendering when you get it wrong
-        const match = phrase.includes(selectedLetter);
-        !match && removeLife();
+        !phrase.includes(selectedLetter) && removeLife();
     }, [selectedLetter])
 
     const getKeyRowValue = e => {
