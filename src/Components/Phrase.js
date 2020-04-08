@@ -1,16 +1,16 @@
 import React from 'react'
 
-export default function Phrase({ phrases }) {
+export default function Phrase({ phrase }) {
 
     return (
         <div id="phrase" className="section">
-            <ul >
-                {phrases.map(phrase => (
-                    <li key={phrase.index}> 
-                        
-                    </li>
-                ))}
-            </ul>
+            {phrase.map(letter => (
+                <ul key={letter}>
+                    {letter !== " "
+                        ? (<li className={"hide letter"}> {letter} </li>)
+                        : (<li className="space"></li>)}
+                </ul>
+            ))}
         </div>
     )
 }

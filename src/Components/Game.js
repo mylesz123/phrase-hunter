@@ -1,35 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Phrase from './Phrase';
 
-export default function Game({ setLives }) {
-    //lets have the phrases array get passed into the phrases component
-    const phrases = [
-        {
-            index: 0,
-            phrase: "my leg",
-            hint: "a common phrase from a particular fish in a show about a character who lives in a pineapple"
-        },
-        {
-            index: 1,
-            phrase: "",
-            hint: ""
-        },
-        {
-            index: 2,
-            phrase: "",
-            hint: ""
-        },
-        {
-            index: 3,
-            phrase: "",
-            hint: ""
-        },
-        {
-            index: 4,
-            phrase: "",
-            hint: ""
-        },
-    ];
+export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
+    console.log("game rendered")
+
+    const [selectedLetter, setSelectedLetter] = useState('');
 
     const scoreboardListItems = [
         { src: "images/firstLife.png"},
@@ -51,18 +26,41 @@ export default function Game({ setLives }) {
         "z","x","c","v","b","n","m",
     ]
 
+    useEffect(() => {
+        // this works, just need to stop it from re-rendering when you get it wrong
+        const match = phrase.includes(selectedLetter);
+        !match && removeLife();
+    }, [selectedLetter])
+
     const getKeyRowValue = e => {
         // can add data keys later for key press
-        console.log(e.target.textContent);
+        setSelectedLetter(e.target.textContent);
+    }
+
+    //todo, when life is lost, remove a heart from the board,
+    const removeLife = () => {
+        setLives(prev => prev - 1)
+        
+        if (lives === 1) {
+            gameOver();
+        }
+    }
+
+    const gameOver = () => {
+        setGameIsRunning(false);
     }
     
     return (
         <>
+            <button onClick={removeLife} />
             <div id="banner" className="section">
                 <h2 className="header">Phrase Hunter</h2>
             </div>
 
-            <Phrase phrases={phrases}/>
+            <Phrase 
+                phrase={phrase}
+                selectedLetter={selectedLetter}
+            />
 
             <div id="qwerty" className="section">
                 <div className="keyrow">
@@ -84,6 +82,7 @@ export default function Game({ setLives }) {
 
             <div id="scoreboard" className="section">
                 <ol>
+                    {/* todo, when life is lost remove img */}
                     {scoreboardListItems.map(item => (
                         <li key={item.src} className="tries"><img src={item.src} alt="game life"/> </li>
                     ))}    
