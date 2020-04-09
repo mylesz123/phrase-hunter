@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Phrase from './Phrase';
 
 export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
-    // needs to be an array to hold the values of the selected letters
     const [selectedLetters, setSelectedLetters] = useState([]);
+    // todo: when matches has all the same letters as the phrase, console.log("you win!!")
+    const [matches, setMatches] = useState([]);
 
     const scoreboardListItems = [
         { src: "images/lastLife.png"},
@@ -25,10 +26,11 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
         "z","x","c","v","b","n","m",
     ]
 
-    const includesMatch = (value) => value.includes(selectedLetters)
-
+    const includesMatch = (array, value) => array.includes(value)
+   
     useEffect(() => {
-        !includesMatch(phrase) && removeLife();
+        includesMatch(phrase, selectedLetters) && setMatches(prev => [...prev, selectedLetters]);
+        !includesMatch(phrase, selectedLetters) && removeLife();
     }, [selectedLetters])
 
     const getKeyRowValue = e => {
@@ -36,7 +38,6 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
         setSelectedLetters(e.target.textContent);
     }
 
-    //todo, when life is lost, remove a heart from the board,
     const removeLife = () => {
         setLives(prev => prev - 1)
         
@@ -61,7 +62,7 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
 
             <Phrase 
                 phrase={phrase}
-                includesMatch={includesMatch}
+                matches={matches}
             />
 
             <div id="qwerty" className="section">

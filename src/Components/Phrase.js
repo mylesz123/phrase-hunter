@@ -1,7 +1,8 @@
 import React from 'react'
 
-export default function Phrase({ phrase, includesMatch }) {
-    // todo : show letter if selected
+export default function Phrase({ phrase, matches }) {  
+    const includesMatch = (letter) => matches.includes(letter)
+    
     return (
         <div id="phrase" className="section">
             <ul>

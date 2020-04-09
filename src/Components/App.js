@@ -13,8 +13,8 @@ export default function App() {
     },
     {
       index: 1,
-      phrase: "trust God",
-      hint: "how do you honor God?"
+      phrase: "love thy neighbor",
+      hint: "one of the 10 commandments."
     },
     {
       index: 2,
@@ -37,8 +37,8 @@ export default function App() {
       hint: "main song from a disney movie about a .... king"
     },
   ];
+
   const [lives, setLives] = useState();
-  // when lives = 5 then gameIsRunning = false and header should show game over message
   const [gameIsRunning, setGameIsRunning] = useState(false);
 
   const i = Math.floor(Math.random() * phrases.length);
