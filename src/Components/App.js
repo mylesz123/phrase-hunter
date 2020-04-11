@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
 import Game from './Game';
+import { PHRASES } from './constants'
 import './../styles/index.css';
 
 export default function App() {
