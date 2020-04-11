@@ -1,38 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import Phrase from './Phrase';
+import { 
+    KEY_ROW_1, 
+    KEY_ROW_2, 
+    KEY_ROW_3,
+    SCOREBOARD_IMAGES,
+} from './constants';
 
 export default function Game({ 
     phrase, setLives, lives, 
-    setGameIsRunning, setYouWon 
+    setGameIsRunning,
 }) {
     const [selectedLetters, setSelectedLetters] = useState([]);
     const [matches, setMatches] = useState([]);
-    const scoreboardListItems = [
-        { src: "images/lastLife.png"},
-        { src: "images/fourthLife.png"},
-        { src: "images/thirdLife.png"},
-        { src: "images/secondLife.png"},
-        { src: "images/firstLife.png"},
-    ]
-
-    const keyrow1 = [
-        "q","w","e","r","t","y","u","i","o","p",
-    ]
-
-    const keyrow2 = [
-        "a","s","d","f","g","h","j","k","l",
-    ]
-
-    const keyrow3 = [
-        "z","x","c","v","b","n","m",
-    ]
+    const [finalAnswers, setFinalAnswers] = useState([]);
+    const [youWon, setYouWon] = useState(false);
 
     const includesMatch = (array, value) => array.includes(value)
    
     useEffect(() => {
         includesMatch(phrase, selectedLetters) && setMatches(prev => [...prev, selectedLetters]);
         !includesMatch(phrase, selectedLetters) && removeLife();
-    }, [selectedLetters])
+        youWon && gameOver();
+    }, [selectedLetters, youWon])
 
     const getKeyRowValue = e => {
         // can add data keys later for key press
@@ -49,11 +39,10 @@ export default function Game({
 
     const gameOver = () => {
         setGameIsRunning(false);
-    }
-
-    const setWinner = () => {
-        setYouWon(true);
-        setGameIsRunning(false);
+        setSelectedLetters([]);
+        setMatches([]);
+        setFinalAnswers([]);
+        setYouWon(false);
     }
     
     return (
@@ -69,22 +58,25 @@ export default function Game({
             <Phrase 
                 phrase={phrase}
                 matches={matches}
-                setWinner={setWinner}
+                setYouWon={setYouWon}
+                youWon={youWon}
+                finalAnswers={finalAnswers}
+                setFinalAnswers={setFinalAnswers}
             />
 
             <div id="qwerty" className="section">
                 <div className="keyrow">
-                    {keyrow1.map(key => (
+                    {KEY_ROW_1.map(key => (
                         <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
                     ))}
                 </div>
                 <div className="keyrow">
-                    {keyrow2.map(key => (
+                    {KEY_ROW_2.map(key => (
                         <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
                     ))}
                 </div>
                 <div className="keyrow">
-                    {keyrow3.map(key => (
+                    {KEY_ROW_3.map(key => (
                         <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
                     ))}
                 </div>
@@ -92,7 +84,7 @@ export default function Game({
 
             <div id="scoreboard" className="section">
                 <ol>
-                    {scoreboardListItems.map((item, index) => (
+                    {SCOREBOARD_IMAGES.map((item, index) => (
                         lives === index &&
                         <li key={item.src} className="tries" ><img src={item.src} alt="game life"/> </li>
                     ))}    
