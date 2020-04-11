@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 
 export default function Phrase({ 
     phrase, matches, setYouWon,
-    youWon, finalAnswers, setFinalAnswers,
+    finalAnswers, setFinalAnswers,
 }) {  
     const includesMatch = (letter) => matches.includes(letter)
 
@@ -23,7 +23,7 @@ export default function Phrase({
         let finalTest = phrase.filter(phrase => phrase !== " ")
         if (finalAnswers.length === finalTest.length) setYouWon(true);
 
-    }, [ref, matches, finalAnswers, youWon])
+    }, [ref, matches, finalAnswers])
 
     return (
         <div id="phrase" className="section">

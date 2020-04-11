@@ -9,7 +9,7 @@ import {
 
 export default function Game({ 
     phrase, setLives, lives, 
-    setGameIsRunning,
+    setGameIsRunning, gameIsRunning
 }) {
     const [selectedLetters, setSelectedLetters] = useState([]);
     const [matches, setMatches] = useState([]);
@@ -25,8 +25,22 @@ export default function Game({
     }, [selectedLetters, youWon])
 
     const getKeyRowValue = e => {
-        // can add data keys later for key press
-        setSelectedLetters(e.target.textContent);
+        if (gameIsRunning) {
+            // can add data keys later for key press
+            setSelectedLetters(e.target.textContent);
+            console.log({ "": e.target })
+            e.target.className = includesMatch(phrase, e.target.textContent)
+                ? "chosen"
+                : "wrong"
+
+                // we can just have the value of classname = state
+            e.target.disabled = true;
+        } else {
+            // need to find a way to clear these when the game is over
+            e.target.disabled = false;
+            e.target.className = "";
+        }
+        // overlay -> win, lose,
     }
 
     const removeLife = () => {
@@ -59,7 +73,6 @@ export default function Game({
                 phrase={phrase}
                 matches={matches}
                 setYouWon={setYouWon}
-                youWon={youWon}
                 finalAnswers={finalAnswers}
                 setFinalAnswers={setFinalAnswers}
             />

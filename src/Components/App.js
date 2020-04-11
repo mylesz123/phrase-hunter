@@ -33,6 +33,7 @@ export default function App() {
         lives={lives}
         setLives={setLives}
         setGameIsRunning={setGameIsRunning}
+        gameIsRunning={gameIsRunning}
       />
     </div>
   );
