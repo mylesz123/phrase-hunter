@@ -25,20 +25,15 @@ export default function Game({
     }, [selectedLetters, youWon])
 
     const getKeyRowValue = e => {
+
         if (gameIsRunning) {
             // can add data keys later for key press
             setSelectedLetters(e.target.textContent);
-            console.log({ "": e.target })
             e.target.className = includesMatch(phrase, e.target.textContent)
                 ? "chosen"
                 : "wrong"
 
-                // we can just have the value of classname = state
             e.target.disabled = true;
-        } else {
-            // need to find a way to clear these when the game is over
-            e.target.disabled = false;
-            e.target.className = "";
         }
         // overlay -> win, lose,
     }
@@ -77,23 +72,25 @@ export default function Game({
                 setFinalAnswers={setFinalAnswers}
             />
 
-            <div id="qwerty" className="section">
-                <div className="keyrow">
-                    {KEY_ROW_1.map(key => (
-                        <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
-                    ))}
+            {gameIsRunning &&
+                <div id="qwerty" className="section">
+                    <div className="keyrow">
+                        {KEY_ROW_1.map(key => (
+                            <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
+                        ))}
+                    </div>
+                    <div className="keyrow">
+                        {KEY_ROW_2.map(key => (
+                            <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
+                        ))}
+                    </div>
+                    <div className="keyrow">
+                        {KEY_ROW_3.map(key => (
+                            <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
+                        ))}
+                    </div>
                 </div>
-                <div className="keyrow">
-                    {KEY_ROW_2.map(key => (
-                        <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
-                    ))}
-                </div>
-                <div className="keyrow">
-                    {KEY_ROW_3.map(key => (
-                        <button key={key} className="key" onClick={getKeyRowValue} >{key}</button>
-                    ))}
-                </div>
-            </div>
+            }
 
             <div id="scoreboard" className="section">
                 <ol>
