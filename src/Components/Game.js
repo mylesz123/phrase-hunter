@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Phrase from './Phrase';
 
-export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
+export default function Game({ 
+    phrase, setLives, lives, 
+    setGameIsRunning, setYouWon 
+}) {
     const [selectedLetters, setSelectedLetters] = useState([]);
-    // todo: when matches has all the same letters as the phrase, console.log("you win!!")
     const [matches, setMatches] = useState([]);
-
     const scoreboardListItems = [
         { src: "images/lastLife.png"},
         { src: "images/fourthLife.png"},
@@ -49,6 +50,11 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
     const gameOver = () => {
         setGameIsRunning(false);
     }
+
+    const setWinner = () => {
+        setYouWon(true);
+        setGameIsRunning(false);
+    }
     
     return (
         <>
@@ -63,6 +69,7 @@ export default function Game({ phrase, setLives, lives, setGameIsRunning }) {
             <Phrase 
                 phrase={phrase}
                 matches={matches}
+                setWinner={setWinner}
             />
 
             <div id="qwerty" className="section">
