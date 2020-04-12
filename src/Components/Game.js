@@ -11,7 +11,7 @@ export default function Game({
     phrase, setLives, lives, 
     setGameIsRunning, gameIsRunning
 }) {
-    const [selectedLetters, setSelectedLetters] = useState([]);
+    const [selectedLetter, setSelectedLetter] = useState("");
     const [matches, setMatches] = useState([]);
     const [finalAnswers, setFinalAnswers] = useState([]);
     const [youWon, setYouWon] = useState(false);
@@ -19,36 +19,28 @@ export default function Game({
     const includesMatch = (array, value) => array.includes(value)
    
     useEffect(() => {
-        includesMatch(phrase, selectedLetters) && setMatches(prev => [...prev, selectedLetters]);
-        !includesMatch(phrase, selectedLetters) && removeLife();
-        youWon && gameOver();
-    }, [selectedLetters, youWon])
+        includesMatch(phrase, selectedLetter) && setMatches(prev => [...prev, selectedLetter]);
+        !includesMatch(phrase, selectedLetter) && removeLife();
+        (lives === 0 || youWon) && gameOver();
+    }, [selectedLetter, youWon])
 
     const getKeyRowValue = e => {
+        // can add data keys later for key press
+        setSelectedLetter(e.target.textContent);
+        e.target.className = includesMatch(phrase, e.target.textContent)
+            ? "chosen"
+            : "wrong"
 
-        if (gameIsRunning) {
-            // can add data keys later for key press
-            setSelectedLetters(e.target.textContent);
-            e.target.className = includesMatch(phrase, e.target.textContent)
-                ? "chosen"
-                : "wrong"
-
-            e.target.disabled = true;
-        }
-        // overlay -> win, lose,
+        e.target.disabled = true;
     }
 
     const removeLife = () => {
         setLives(prev => prev - 1)
-        
-        if (lives === 0) {
-            gameOver();
-        }
     }
 
     const gameOver = () => {
         setGameIsRunning(false);
-        setSelectedLetters([]);
+        setSelectedLetter("");
         setMatches([]);
         setFinalAnswers([]);
         setYouWon(false);

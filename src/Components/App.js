@@ -20,12 +20,16 @@ export default function App() {
     setGameIsRunning(true)
   }
 
+  const className = !lives 
+    ? "start" 
+    : lives > 0 ? "win" : "lose"
+
   return (  
     <div className="main-container">
       {!gameIsRunning &&
-        <div id="overlay" className="start">
+        <div id="overlay" className={className} >
           <Header lives={lives}/>
-        <button id="btn__reset" onClick={startGame}>{lives !== -1 ? "Start Game" : "Play Again" }</button>
+          <button id="btn__reset" onClick={startGame}>{!lives ? "Start Game" : "Play Again" }</button>
         </div>
       }
       <Game 
